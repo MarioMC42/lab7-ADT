@@ -34,7 +34,7 @@ private:
     // ===== Resolve these TODOs later (Part D) =====
 
     // TODO (Part D): Add a fixed capacity constant of four study sessions.
-    const int CAP = 4; 
+    static const int CAP = 4;
     // TODO (Part D): Add an int array named sessionMinutes for the stored session durations.
     int sessionMinutes[CAP];
     // TODO (Part D): Add an int that tracks how many study sessions are stored.
@@ -42,11 +42,62 @@ private:
 
 public:
     // TODO (Part D): Write a constructor that creates an empty log.
+    StudySessionLog()
+    {
+        numSessions = 0;
+        for (int i = 0; i < CAP; i++)
+        {
+            sessionMinutes[i] = 0;
+        }
+    }
     // TODO (Part D): Write addSession. It receives minutes and reports whether the session was stored.
+    bool addSession(int minutes)
+    {
+        if (numSessions < CAP)
+        {
+            sessionMinutes[numSessions] = minutes;
+            numSessions++;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
     // TODO (Part D): Write totalMinutes as a const member function.
+    int totalMinutes() const
+    {
+        int total = 0;
+        for (int i = 0; i < numSessions; i++)
+        {
+            total += sessionMinutes[i];
+        }
+        return total;
+    }
     // TODO (Part D): Write longestSession as a const member function.
+    int longestSession() const
+    {
+        int longest = 0;
+        for (int i = 0; i < numSessions; i++)
+        {
+            if (sessionMinutes[i] > longest)
+            {
+                longest = sessionMinutes[i];
+            }
+        }
+        return longest;
+    }
     // TODO (Part D): Write size as a const member function.
+    int size() const
+    {
+        return numSessions;
+    }
     // TODO (Part D): Write isEmpty as a const member function.
+    bool isEmpty() const
+    {
+        return numSessions == 0;
+    }
 };
 
 int main()
@@ -54,10 +105,26 @@ int main()
     // ===== Resolve these TODOs later (Part E) =====
 
     // TODO (Part E): Create a StudySessionLog object and print whether it starts empty.
+    StudySessionLog log;
+    cout << "Does the log start empty? " << (log.isEmpty() ? "Yes" : "No") << endl;
     // TODO (Part E): Add four dummy session durations and attempt to add a fifth.
+    log.addSession(50);
+    log.addSession(45);
+    log.addSession(60);
+    log.addSession(80);
+    //5th unacceptable session
+    log.addSession(60);
     // TODO (Part E): Print the number of stored sessions and whether the fifth session was accepted.
+    cout << "Stored sessions: " << log.size() << endl;
     // TODO (Part E): Print the total minutes and the longest stored session.
+    cout << "Total minutes: " << log.totalMinutes() << endl;
+    cout << "Longest session: " << log.longestSession() << endl; 
     // TODO (Part E): Print descriptive English labels for all results.
+    cout << "Is the log empty? " << (log.isEmpty() ? "Yes." : "No.") << endl;
+    cout << "Number of stored sessions: " << log.size() << endl;
+    cout << "Total minutes: " << log.totalMinutes() << endl;
+    cout << "Longest session: " << log.longestSession() << endl;
+    cout << "Is the 5th session accepted? " << (log.addSession(60) ? "Yes." : "No.") << endl;
 
     return 0;
 }
